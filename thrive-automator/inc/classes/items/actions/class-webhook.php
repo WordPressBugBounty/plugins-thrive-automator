@@ -83,6 +83,12 @@ class Webhook extends Action {
 					$reference = &$reference[ $key ];
 
 				}
+
+				// Check if value starts and ends with %, then set it to empty.
+				if ( is_string( $field['value'] ) && preg_match( '/^%.*%$/', $field['value'] ) ) {
+					$field['value'] = '';
+				}
+
 				$reference = $field['value'];
 				unset( $reference );
 			}
