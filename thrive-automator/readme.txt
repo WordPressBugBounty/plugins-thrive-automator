@@ -2,9 +2,9 @@
 Contributors: thrivethemes
 Tags: automation, thrive
 Requires at least: 5.5
-Tested up to: 6.4
+Tested up to: 6.7.1
 Requires PHP: 7.0
-Stable tag: 10.3
+Stable tag: 10.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -228,6 +228,9 @@ Thrive Automator is 100% free - *no refunds needed!*
 == Screenshots ==
 
 == Changelog ==
+
+= 10.4 - 2024-12-11 =
+* Minor fixes and improvements
 
 = 10.3 - 2024-10-22 =
 * Minor fixes and improvements
