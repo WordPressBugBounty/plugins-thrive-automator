@@ -2,15 +2,19 @@
 Contributors: thrivethemes
 Tags: automation, thrive
 Requires at least: 5.5
-Tested up to: 6.7.1
+Tested up to: 6.7.2
 Requires PHP: 7.0
-Stable tag: 10.5.1
+Stable tag: 10.6.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Create smart automations that integrate your website with your favourite apps and plugins
 
 == Description ==
+
+== As we continue to grow and expand our product suite at Thrive Themes, we've made the strategic decision to retire Thrive Automator and partner with our sister brand, Uncanny Automator ==
+
+[Learn more](https://wordpress.org/plugins/uncanny-automator/) about what this means for you and Thrive Automator.
 
 https://www.youtube.com/watch?v=NaNO2QeQkMc
 
@@ -228,6 +232,12 @@ Thrive Automator is 100% free - *no refunds needed!*
 == Screenshots ==
 
 == Changelog ==
+
+= 10.6.1 - 2025-04-02 =
+* A New Era for Website Automation: [Why We’re Partnering with Uncanny Automator](https://thrivethemes.com/uncanny-automator/)
+
+= 10.6 - 2025-03-26 =
+* Minor fixes and improvements
 
 = 10.5.1 - 2025-02-25 =
 * Minor fixes and improvements

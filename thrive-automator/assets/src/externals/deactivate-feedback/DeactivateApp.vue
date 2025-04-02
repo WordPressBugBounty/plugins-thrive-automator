@@ -49,6 +49,9 @@ export default {
 			deactivateHref: '',
 			showConfirmation: false,
 			showExtraReason: false,
+			message: '',
+			isUncannyActive: false,
+			activationCounter: 0,
 		}
 	},
 	computed: {
@@ -69,7 +72,19 @@ export default {
 
 			mutationObserver.observe( pluginsForm, {childList: true} );
 		}
+		const uncannyButtons = document.querySelectorAll('.tap-sunset-uncanny-activate');
+		uncannyButtons.forEach(button => {
+			button.addEventListener('click', this.externalButtonClickHandler);
+		});
+		this.checkUncannyStatus();		
 	},
+	beforeDestroy() {
+    // Clean up the event listeners when the component is destroyed
+    const uncannyButtons = document.querySelectorAll('.tap-sunset-uncanny-activate');
+    uncannyButtons.forEach(button => {
+      button.removeEventListener('click', this.externalButtonClickHandler);
+    });
+  	},
 	methods: {
 		bindEvents() {
 			this.deactivateButton = document.querySelector( '#the-list [data-slug="thrive-automator"] span.deactivate a' );
@@ -77,6 +92,7 @@ export default {
 				this.deactivateHref = this.deactivateButton.getAttribute( 'href' );
 				this.deactivateButton.addEventListener( 'click', this.showModal );
 			}
+			
 		},
 		changeOption( value ) {
 			this.selectedOpt = value;
@@ -105,6 +121,91 @@ export default {
 				this.deactivate();
 				toggleAppLoader( false );
 			} );
+		},
+		externalButtonClickHandler() {
+      		// Call the method you want to trigger
+      		this.activateUncanny();
+    	},
+		activateUncanny() {
+			const uncannyButton = document.querySelector('.tap-sunset-uncanny-activate');
+			if (uncannyButton && this.isUncannyActive === false) {
+				uncannyButton.textContent = 'Activating...';
+			}
+			if (!window.TAPAdminAjax?.ajax_url || !window.TAPAdminAjax?.nonce) {
+				console.error("Required TAPAdminAjax configuration is missing");
+				this.uncannyInstallButton = 'Activate';
+				return;
+			}
+
+			fetch(window.TAPAdminAjax.ajax_url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+				},
+				body: new URLSearchParams({
+					action: 'thrive_automator_uncanny',
+					nonce: window.TAPAdminAjax.nonce
+				})
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					this.isUncannyActive = true;
+					const uncannyButtons = document.querySelectorAll('.tap-sunset-uncanny-activate');
+					uncannyButtons.forEach(button => {
+						button.innerHTML = '<a href="/wp-admin/edit.php?post_type=uo-recipe&page=uncanny-automator-dashboard">Get Started</a>';
+					});
+				} else {
+					this.uncannyInstallButton = 'Activate';
+				}
+			})
+			.catch(error => {
+				const uncannyButtons = document.querySelectorAll('.tap-sunset-uncanny-activate');
+					uncannyButtons.forEach(button => {
+						button.innerHTML = '<a href="/wp-admin/edit.php?post_type=uo-recipe&page=uncanny-automator-dashboard">Get Started</a>';
+					});
+			})
+		},
+		checkUncannyStatus() {
+			this.isUncannyActive = false;
+			if (!window.TAPAdminAjax?.ajax_url || !window.TAPAdminAjax?.nonce) {
+				console.error("Required TAPAdminAjax configuration is missing");
+				return;
+			}
+
+			fetch(window.TAPAdminAjax.ajax_url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+				},
+				body: new URLSearchParams({
+					action: 'thrive_automator_check_uncanny',
+					nonce: window.TAPAdminAjax.nonce
+				})
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.data.message === 'active') {
+					this.isUncannyActive = true;
+					const uncannyButtons = document.querySelectorAll('.tap-sunset-uncanny-activate');
+					uncannyButtons.forEach(button => {
+						button.innerHTML = '<a href="/wp-admin/edit.php?post_type=uo-recipe&page=uncanny-automator-dashboard">Get Started</a>';
+					});
+					
+				} 
+				else if (data.data.message === 'installed') {
+					const uncannyButtons = document.querySelectorAll('.tap-sunset-uncanny-activate');
+					uncannyButtons.forEach(button => {
+						button.textContent = 'Activate Uncanny Automator';
+					});
+				} 				
+				else {
+					const uncannyButtons = document.querySelectorAll('.tap-sunset-uncanny-activate');
+					uncannyButtons.forEach(button => {
+						button.textContent = 'Install Uncanny Automator';
+					});
+				}
+			})
 		}
 	}
 }

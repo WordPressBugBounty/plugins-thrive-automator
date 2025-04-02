@@ -846,6 +846,18 @@ class Utils {
 		wp_enqueue_script( "tap-$asset", TAP_PLUGIN_URL . "assets/dist/js/$asset.js", [ 'lodash', 'jquery' ], TAP_VERSION, true );
 		wp_localize_script( "tap-$asset", 'TAPAdmin', $localize_data );
 
+		if ( $asset === 'admin' ) {
+			// Localize the script with additional data for AJAX requests
+			wp_localize_script(
+				"tap-$asset", // Handle of the script being localized
+				'TAPAdminAjax', // Name of the JavaScript object to create
+				array(
+					'nonce' => wp_create_nonce( 'tap_admin_nonce' ), // Create a nonce for security
+					'ajax_url' => admin_url( 'admin-ajax.php' ), // URL for AJAX requests
+				)
+			);
+		}
+
 		if ( $enqueue_fonts ) {
 			wp_enqueue_style( 'tap-font-roboto', '//fonts.googleapis.com/css?family=Roboto:200,300,400,500,600,700,800' );
 			wp_enqueue_style( 'tap-font-rubik', '//fonts.googleapis.com/css?family=Rubik:200,300,400,500,600,700,800' );
