@@ -14,7 +14,7 @@ Create smart automations that integrate your website with your favourite apps an
 
 == As we continue to grow and expand our product suite at Thrive Themes, we've made the strategic decision to retire Thrive Automator and partner with our sister brand, Uncanny Automator ==
 
-[Learn more](https://wordpress.org/plugins/uncanny-automator/) about what this means for you and Thrive Automator.
+[Learn more](https://thrivethemes.com/uncanny-automator/) about what this means for you and Thrive Automator.
 
 https://www.youtube.com/watch?v=NaNO2QeQkMc
 
@@ -232,6 +232,9 @@ Thrive Automator is 100% free - *no refunds needed!*
 == Screenshots ==
 
 == Changelog ==
+
+= 10.6.1.1 - 2025-04-04 =
+* Minor CSS fix for pagination and scrolling ability on "All automations" screen
 
 = 10.6.1 - 2025-04-02 =
 * A New Era for Website Automation: [Why We’re Partnering with Uncanny Automator](https://thrivethemes.com/uncanny-automator/)
